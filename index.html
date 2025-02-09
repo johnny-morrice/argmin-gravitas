@@ -150,7 +150,7 @@ visible:  false
 <!-- <br class="wide"> -->
 <br>
 
-<h1>Best posts:</h1>
+<h1>Least worst posts:</h1>
 <section class="post-list">
     {% assign posts = site.posts | where_exp: "item", "item.quality > 6" | sample: 6 %}
     {% for post in posts %}
