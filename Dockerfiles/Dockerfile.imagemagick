@@ -15,5 +15,7 @@ findutils \
 # Set the working directory to the mounted volume
 WORKDIR /srv
 
+COPY ./Dockerfiles/imagemagick/mogrify.sh /app/mogrify.sh
+
 # The image simply runs a shell command passed via arguments
-ENTRYPOINT ["/bin/sh", "-c"]
+ENTRYPOINT ["/app/mogrify.sh"]

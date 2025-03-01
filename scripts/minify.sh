@@ -43,23 +43,8 @@ docker build --platform linux/amd64 --progress plain -t argmin-gravitas/imagemag
 echo "Size before image minification"
 du -sh _site
 
-echo "Compressing jpegs..."
-docker run --rm --platform linux/amd64 \
-  -v "$(pwd)/_site":/srv \
-  argmin-gravitas/imagemagick \
-  'find . -type f \( -iname "*.jpg" -o -iname "*.jpeg" \) -exec mogrify -strip -interlace Plane -quality 85 {} \;'
-
-echo "Compressing pngs..."
-docker run --rm --platform linux/amd64 \
-  -v "$(pwd)/_site":/srv \
-  my-imagemagick \
-  'find . -type f -iname "*.png" -exec mogrify -strip -quality 85 {} \;'
-
-echo "Compressing gifs..."
-docker run --rm --platform linux/amd64 \
-  -v "$(pwd)/_site":/srv \
-  my-imagemagick \
-  'find . -type f -iname "*.gif" -exec mogrify -strip {} \;'
+# Run the image minification command
+docker run --rm --platform linux/amd64 -v "$(pwd)/_site":/srv argmin-gravitas/imagemagick
 
 echo "Size after image minification"
 du -sh _site
