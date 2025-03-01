@@ -15,7 +15,7 @@ docker build --progress plain -t argmin-gravitas/imagemin -f Dockerfiles/Dockerf
 echo "Size before image minification"
 du -sh _site
 
-docker run --rm -v "$(pwd)/_site":/images argmin-gravitas/imagemin '/images/**/*.{jpg,jpeg,png,gif,svg}' --out-dir=/images
+docker run --rm -v "$(pwd)/_site":/images argmin-gravitas/imagemin '/images/**/*.{jpg,jpeg,png,gif}' --out-dir=/images
 
 echo "Size after image minification"
 du -sh _site
