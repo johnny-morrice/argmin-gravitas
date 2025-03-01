@@ -14,7 +14,8 @@ du -sh _site
 docker run --rm --platform linux/amd64 \
   -v "$(pwd)/_site":/srv \
   -w /srv \
-  tdewolff/minify --exclude "files/**" -r -o /srv .
+  tdewolff/minify sh -c 'mkdir -p /tmp/minify && minify --exclude -r -o /tmp/minify . && cp -a /tmp/minify/. . && rm -rf /tmp/minify'
+
 
 echo "Size after HTML/CSS/JS minification:"
 du -sh _site
