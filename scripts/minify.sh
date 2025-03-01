@@ -4,7 +4,7 @@ set -e
 echo "Size before HTML/css/js minification"
 du -sh _site
 
-docker run --rm --platform linux/amd64 -v "$(pwd)/_site":/srv tdewolff/minify --exclude "/files/" --exclude "\.svg$" -r -o /srv .
+docker run --rm --platform linux/amd64 -v "$(pwd)/_site":/srv -w /srv tdewolff/minify --exclude "/files/" --exclude "\.svg$" -r -o /srv .
 
 echo "Size after HTML/css/js minification"
 du -sh _site
