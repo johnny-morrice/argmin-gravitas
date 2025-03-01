@@ -38,12 +38,28 @@ du -sh _site
 # rm "$tmp_before" "$tmp_after"
 
 # Build imagemin Dockerfile
-docker build --progress plain -t argmin-gravitas/imagemin -f Dockerfiles/Dockerfile.imagemin .
+docker build --platform linux/amd64 --progress plain -t argmin-gravitas/imagemagick -f Dockerfiles/Dockerfile.imagemagick .
 
 echo "Size before image minification"
 du -sh _site
 
-docker run --rm -v "$(pwd)/_site":/images argmin-gravitas/imagemin '/images/**/*.{jpg,jpeg,png,gif}' --out-dir=/images
+echo "Compressing jpegs..."
+docker run --rm --platform linux/amd64 \
+  -v "$(pwd)/_site":/srv \
+  argmin-gravitas/imagemagick \
+  'find . -type f \( -iname "*.jpg" -o -iname "*.jpeg" \) -exec mogrify -strip -interlace Plane -quality 85 {} \;'
+
+echo "Compressing pngs..."
+docker run --rm --platform linux/amd64 \
+  -v "$(pwd)/_site":/srv \
+  my-imagemagick \
+  'find . -type f -iname "*.png" -exec mogrify -strip -quality 85 {} \;'
+
+echo "Compressing gifs..."
+docker run --rm --platform linux/amd64 \
+  -v "$(pwd)/_site":/srv \
+  my-imagemagick \
+  'find . -type f -iname "*.gif" -exec mogrify -strip {} \;'
 
 echo "Size after image minification"
 du -sh _site
