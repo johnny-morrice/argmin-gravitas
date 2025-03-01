@@ -1,0 +1,11 @@
+# Use a lightweight Node 18 image
+FROM node:18-alpine
+
+# Install imagemin-cli globally
+RUN npm install -g imagemin-cli
+
+# Set the working directory
+WORKDIR /images
+
+# Set the entrypoint to imagemin so that any arguments you pass are forwarded to it
+ENTRYPOINT ["imagemin"]
