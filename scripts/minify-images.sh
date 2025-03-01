@@ -1,3 +1,6 @@
+#!/bin/bash
+set -e
+
 # Build imagemin Dockerfile
 docker build --platform linux/amd64 --progress plain -t argmin-gravitas/imagemagick -f Dockerfiles/Dockerfile.imagemagick .
 
